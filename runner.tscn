@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://drap846oiae04"]
+
+[ext_resource type="Texture2D" uid="uid://c5eqqv0les8l6" path="res://placeholders/background_set/B1010.png" id="1_0fan2"]
+[ext_resource type="PackedScene" uid="uid://disowaf1oeq4g" path="res://speedracer.tscn" id="1_m54dy"]
+[ext_resource type="Script" path="res://runner.gd" id="1_vphjh"]
+[ext_resource type="Texture2D" uid="uid://5q8nxne7qa2g" path="res://placeholders/background_set/B1013-4.png" id="2_rk4pt"]
+[ext_resource type="Texture2D" uid="uid://1hjaykbmdo83" path="res://placeholders/background_set/B1013-1.png" id="3_7uex0"]
+[ext_resource type="PackedScene" uid="uid://xw25ih6a8yrx" path="res://spawner.tscn" id="6_wcq0r"]
+
+[node name="Runner" type="Node2D"]
+script = ExtResource("1_vphjh")
+
+[node name="Camera2D2" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
+
+[node name="parallax" type="Node2D" parent="."]
+position = Vector2(590, 342)
+
+[node name="Parallax2D" type="Parallax2D" parent="parallax"]
+scroll_scale = Vector2(0.1, 0)
+repeat_size = Vector2(256, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="parallax/Parallax2D"]
+texture = ExtResource("1_0fan2")
+
+[node name="Parallax2D3" type="Parallax2D" parent="parallax"]
+scroll_scale = Vector2(1, 0)
+repeat_size = Vector2(256, 0)
+
+[node name="Sprite2D2" type="Sprite2D" parent="parallax/Parallax2D3"]
+texture = ExtResource("2_rk4pt")
+
+[node name="Parallax2D2" type="Parallax2D" parent="parallax"]
+scroll_scale = Vector2(1.5, 0)
+repeat_size = Vector2(256, 0)
+
+[node name="Sprite2D3" type="Sprite2D" parent="parallax/Parallax2D2"]
+texture = ExtResource("3_7uex0")
+
+[node name="speedracer" parent="." instance=ExtResource("1_m54dy")]
+position = Vector2(-40, 0)
+
+[node name="obs" type="Node2D" parent="."]
+
+[node name="spawner" parent="." instance=ExtResource("6_wcq0r")]
