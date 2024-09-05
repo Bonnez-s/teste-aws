@@ -1,40 +1,22 @@
 extends CharacterBody2D
 
-var speed=150
-var jump=0
-var jump_velo=400
-var high=0
-var floor=0
 
+const SPEED: int = 300.0
+const JUMP_VELOCITY: int = -400.0
+
+@export_category("Variables")
+@export_enum("left:-1", "stop:0","right:1") var move_direction: int = 1
+
+
+func _physics_process(delta):
 	
-func _physics_process(delta: float):
-	#JUMP#
-	
-	if Input.is_action_pressed("jump") and jump <21:
-		
-		jump +=1
-		position.y -= delta*jump_velo
-		high-=0.5
-		if high <=-3:
-			$car.position.y = -3
-			floor=0
-		else:
-			$car.position.y +=high*delta
-	#DOWN#
-	if floor==1:
-		jump=0
-		$car.position.y= 0
-		
-	else:
-		position.y += delta*100 
-		if (Input.is_action_just_released("jump") and jump>0 and jump <21) or jump==20 :
-			high+=0.5
-			if high >=3:
-				$car.position.y = 3
-				
-			else:
-				$car.position.y +=high*delta
+	## Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
 
-
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	floor=1
+	## Handle jump.
+	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+		velocity.y = JUMP_VELOCITY 
+	## Sets constant movement for the player in one direction
+	velocity.x = SPEED * move_direction
+	move_and_slide()
